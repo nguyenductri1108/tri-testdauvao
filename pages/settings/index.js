@@ -17,6 +17,11 @@ const Settings = () => {
         color: state.settings.color,
         activeDate: state.settings.activeDate,
     }));
+    const [showSubmit, setShowSubmit] = useState(false);
+
+    const turnOnSubmit = () => {
+        setShowSubmit(true);
+    };
 
     const { color } = data;
 
@@ -67,7 +72,8 @@ const Settings = () => {
                     initialValues={data}
                     onFinish={(e) => {
                         dispatch(setData({ ...e, color: colorInput }));
-                        console.log(e);
+                        console.log({ ...e, color: colorInput });
+                        setShowSubmit(false);
                     }}
                     autoComplete="off"
                 >
@@ -81,7 +87,7 @@ const Settings = () => {
                             },
                         ]}
                     >
-                        <Input size="large" />
+                        <Input onChange={turnOnSubmit} size="large" />
                     </Form.Item>
 
                     <Form.Item
@@ -89,7 +95,7 @@ const Settings = () => {
                         name="email"
                         rules={[{ required: true, type: "email", message: "The input is not valid E-mail!" }]}
                     >
-                        <Input size="large" />
+                        <Input onChange={turnOnSubmit} size="large" />
                     </Form.Item>
 
                     <Form.Item label="Background Color">
@@ -97,6 +103,7 @@ const Settings = () => {
                             value={colorInput}
                             onChange={(e) => {
                                 setColorInput(e.target.value);
+                                turnOnSubmit();
                             }}
                             onPressEnter={(e) => {
                                 e.preventDefault();
@@ -108,6 +115,7 @@ const Settings = () => {
                                     value={colorInput}
                                     onChange={(e) => {
                                         // console.log(e);
+                                        turnOnSubmit();
                                         setColorInput(e.toHexString());
                                     }}
                                 />
@@ -116,14 +124,16 @@ const Settings = () => {
                     </Form.Item>
 
                     <Form.Item name="activeDate" label="Active Date">
-                        <RangePicker size="large"></RangePicker>
+                        <RangePicker onChange={turnOnSubmit} size="large"></RangePicker>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit">
-                            Save
-                        </Button>
-                    </Form.Item>
+                    {showSubmit && (
+                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                            <Button type="primary" htmlType="submit">
+                                Save
+                            </Button>
+                        </Form.Item>
+                    )}
                 </Form>
             </div>
         </AppLayout>
