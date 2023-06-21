@@ -1,13 +1,11 @@
+import DashboardLayout from "../../components/DashboardLayout";
+import AppLayout from "../../components/Layout";
+
 const Dashboard = () => {
     return (
-        <div>
-            <h2>Dashboard</h2>
-            <div
-                style={{
-                    marginTop: "10px",
-                }}
-            ></div>
-        </div>
+        <AppLayout activedTab={"dashboard"}>
+            <DashboardLayout valueOptionChart={undefined}></DashboardLayout>
+        </AppLayout>
     );
 };
 

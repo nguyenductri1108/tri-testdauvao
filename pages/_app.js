@@ -1,11 +1,12 @@
-import AppLayout from "../components/Layout";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
     return (
-        <AppLayout>
-            <Component {...pageProps} />
-        </AppLayout>
+        <Provider store={store}>
+            <Component {...pageProps} />; //{" "}
+        </Provider>
     );
 }
 
